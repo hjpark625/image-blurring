@@ -15,9 +15,11 @@ async def blurring_image(image_data: bytes, origin_file_name: str):
     face_cascade = cv2.CascadeClassifier(
         cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
     )
-    faces = face_cascade.detectMultiScale(img, 1.1, 4)
+    faces = face_cascade.detectMultiScale(image=img, scaleFactor=1.1, minNeighbors=4)
     for x, y, w, h in faces:
-        img[y : y + h, x : x + w] = cv2.blur(img[y : y + h, x : x + w], (30, 30))
+        img[y : y + h, x : x + w] = cv2.blur(
+            src=img[y : y + h, x : x + w], ksize=(30, 30)
+        )
 
     plate_cascade = cv2.CascadeClassifier(
         cv2.data.haarcascades + "haarcascade_russian_plate_number.xml"
@@ -31,4 +33,11 @@ async def blurring_image(image_data: bytes, origin_file_name: str):
 
     cv2.imwrite(str(save_path / f"blur_{origin_file_name}"), img)
 
-    return {"result": f"{save_path}/blur_{origin_file_name}에 저장됨"}
+    return ResponseDTO(message=f"{save_path}/blur_{origin_file_name}에 저장됨")
+
+
+class ResponseDTO:
+    message: str
+
+    def __init__(self, message: str):
+        self.message = message

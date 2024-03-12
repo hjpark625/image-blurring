@@ -1,12 +1,12 @@
 from fastapi import FastAPI, File, UploadFile
-from image_blur import blurring_image
+from image_blur import blurring_image, ResponseDTO
 
 app = FastAPI()
 
 
 @app.get("/")
 async def root():
-    return {"message": "server is running"}
+    return ResponseDTO(message="server is running")
 
 
 # TODO: 전반적으로 사람의 얼굴과 번호판의 각도, 사이즈가 다양할때 블러처리가 제대로 되지 않음, 사람은 다수일때 블러처리가 제대로 되지 않음
