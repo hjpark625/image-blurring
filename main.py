@@ -35,6 +35,9 @@ async def process_image(image: UploadFile = File(...)):
     file_name = temp_file.name.split('/')[-1]
     save_path = f'{desktop_path}/blurImages'
 
+    if not os.path.exists(save_path):
+        os.makedirs(save_path, exist_ok=True)
+
     cv2.imwrite(f'{save_path}/${file_name}', img)
     return {'result': f'{save_path}에 저장됨'}
 
@@ -58,6 +61,10 @@ async def multiple_images(images: list[UploadFile] = File(...)):
         temp_file = NamedTemporaryFile(delete=True, suffix='.jpg')
         file_name = temp_file.name.split('/')[-1]
         save_path = f'{desktop_path}/blurImages'
+
+        if not os.path.exists(save_path):
+            os.makedirs(save_path, exist_ok=True)
+
         cv2.imwrite(f'{save_path}/{file_name}', img)
 
     return {'result': f'{save_path}에 저장됨'}
