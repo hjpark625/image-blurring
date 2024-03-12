@@ -10,7 +10,7 @@ app = FastAPI()
 async def root():
     return {'message': 'server is running'}
 
-@app.post('/image-blurring')
+@app.post('/image')
 async def process_image(image: UploadFile = File(...)):
     contents = await image.read()
     
