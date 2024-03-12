@@ -3,12 +3,14 @@ from image_blur import blurring_image
 
 app = FastAPI()
 
-@app.get('/')
+
+@app.get("/")
 async def root():
-    return {'message': 'server is running'}
+    return {"message": "server is running"}
+
 
 # TODO: 전반적으로 사람의 얼굴과 번호판의 각도, 사이즈가 다양할때 블러처리가 제대로 되지 않음, 사람은 다수일때 블러처리가 제대로 되지 않음
-@app.post('/image')
+@app.post("/image")
 async def process_image(image: UploadFile = File(...)):
     contents = await image.read()
     origin_file_name = image.filename
@@ -17,7 +19,8 @@ async def process_image(image: UploadFile = File(...)):
 
     return result
 
-@app.post('/images')
+
+@app.post("/images")
 async def multiple_images(images: list[UploadFile] = File(...)):
     for image in images:
         contents = await image.read()
