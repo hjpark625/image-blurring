@@ -24,8 +24,6 @@ async def blurring_image(image_data: bytes, origin_file_name: str):
     save_path = Path.home() / 'Desktop' / 'blurImages'
     save_path.mkdir(parents=True, exist_ok=True)
 
-    print(img)
-    
     cv2.imwrite(str(save_path / f'blur_{origin_file_name}'), img)
 
     return {'result': f'{save_path}/blur_{origin_file_name}에 저장됨'}
