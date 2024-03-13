@@ -1,4 +1,5 @@
 from pathlib import Path
+import dataclasses
 import cv2
 import numpy as np
 
@@ -36,6 +37,7 @@ async def blurring_image(image_data: bytes, origin_file_name: str):
     return ResponseDTO(message=f"{save_path}/blur_{origin_file_name}에 저장됨")
 
 
+@dataclasses.dataclass
 class ResponseDTO:
     message: str
 
